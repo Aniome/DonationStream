@@ -23,9 +23,9 @@ public class RunApplication extends Application {
     public void start(Stage stage) throws IOException {
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
         resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
-        this.stage = stage;
+        RunApplication.stage = stage;
 
-        boolean isAuthenticated = false;
+        boolean isAuthenticated = true;
 
         if (isAuthenticated) {
             mainPage(stage);
