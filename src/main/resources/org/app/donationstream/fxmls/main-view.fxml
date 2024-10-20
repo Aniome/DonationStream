@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import atlantafx.base.controls.Spacer?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
@@ -9,37 +9,73 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.app.donationstream.controllers.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="720.0"
+            prefWidth="1280.0" stylesheets="@../css/dracula.css" xmlns="http://javafx.com/javafx/22"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.app.donationstream.controllers.MainController">
    <top>
-      <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="91.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
-         <items>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="217.0" spacing="15.0">
-               <children>
-                  <ImageView fitHeight="63.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/donate_icon.png" />
-                     </image>
-                  </ImageView>
-                  <Label text="DonationStream" textFill="#fffb00">
-                     <font>
-                        <Font name="Arial" size="16.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <Spacer />
-            <HBox prefHeight="100.0" prefWidth="200.0" />
-         </items>
-      </ToolBar>
+       <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="99.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+           <HBox alignment="CENTER" prefHeight="85.0" prefWidth="244.0" spacing="15.0">
+               <ImageView fitHeight="63.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                   <Image url="@../image/donate_img.png"/>
+               </ImageView>
+               <Text stroke="#ffffff1a" strokeType="OUTSIDE" text="DonationStream">
+                   <font>
+                       <Font size="18.0"/>
+                   </font>
+                   <fill>
+                       <LinearGradient endX="0.9289099526066351">
+                           <stops>
+                               <Stop>
+                                   <color>
+                                       <Color red="0.8289473652839661" green="0.8260051012039185"
+                                              blue="0.7406798005104065"/>
+                                   </color>
+                               </Stop>
+                               <Stop offset="1.0">
+                                   <color>
+                                       <Color red="0.9529411792755127" green="0.7921568751335144"
+                                              blue="0.125490203499794"/>
+                                   </color>
+                               </Stop>
+                           </stops>
+                       </LinearGradient>
+                   </fill>
+               </Text>
+           </HBox>
+           <Spacer/>
+           <HBox alignment="CENTER" prefHeight="91.0" prefWidth="380.0" spacing="10.0">
+               <Button mnemonicParsing="false" text="Баланс: 1000">
+                   <font>
+                       <Font size="20.0"/>
+                   </font>
+               </Button>
+               <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="55.0">
+                   <graphic>
+                       <FontIcon iconLiteral="ci-notification" scaleX="2.0" scaleY="2.0" text=""/>
+                   </graphic>
+               </Button>
+               <Button mnemonicParsing="false" text="Username">
+                   <graphic>
+                       <FontIcon iconLiteral="ci-user-avatar" scaleX="1.5" scaleY="1.5" wrappingWidth="24.0"/>
+                   </graphic>
+                   <font>
+                       <Font size="18.0"/>
+                   </font>
+               </Button>
+           </HBox>
+       </ToolBar>
    </top>
    <center>
-      <SplitPane dividerPositions="0.2515625" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="665.0" prefWidth="918.0" />
-        </items>
-      </SplitPane>
+       <SplitPane dividerPositions="0.2515625" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0"/>
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="665.0" prefWidth="918.0"/>
+       </SplitPane>
    </center>
 </BorderPane>
