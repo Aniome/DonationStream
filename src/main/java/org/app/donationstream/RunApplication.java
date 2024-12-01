@@ -18,6 +18,7 @@ public class RunApplication extends Application {
     private static final int mainHeight = 720;
     public static ResourceBundle resourceBundle;
     public static Stage stage;
+    public static String appPath;
 
     @Override
     public void start(Stage stage) throws IOException {

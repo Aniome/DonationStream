@@ -4,6 +4,7 @@ module org.app.donationstream {
     requires org.kordamp.ikonli.javafx;
     requires atlantafx.base;
     requires javafx.fxml;
+    requires org.hibernate.orm.core;
 
     exports org.app.donationstream;
     opens org.app.donationstream.controllers;
