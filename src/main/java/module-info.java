@@ -5,6 +5,8 @@ module org.app.donationstream {
     requires atlantafx.base;
     requires javafx.fxml;
     requires org.hibernate.orm.core;
+    requires java.naming;
+    requires jakarta.persistence;
 
     exports org.app.donationstream;
     opens org.app.donationstream.controllers;

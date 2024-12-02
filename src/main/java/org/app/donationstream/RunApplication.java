@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.app.donationstream.util.HibernateUtil;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -24,6 +25,7 @@ public class RunApplication extends Application {
     public void start(Stage stage) throws IOException {
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
         resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
+        HibernateUtil.setUp();
         RunApplication.stage = stage;
 
         boolean isAuthenticated = true;
