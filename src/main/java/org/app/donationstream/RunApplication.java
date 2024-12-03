@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import org.app.donationstream.util.HibernateUtil;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Locale;
 import java.util.ResourceBundle;
 

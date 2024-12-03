@@ -7,6 +7,7 @@ module org.app.donationstream {
     requires org.hibernate.orm.core;
     requires java.naming;
     requires jakarta.persistence;
+    requires com.fasterxml.jackson.databind;
 
     exports org.app.donationstream;
     opens org.app.donationstream.controllers;

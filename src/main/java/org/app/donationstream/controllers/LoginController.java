@@ -3,7 +3,7 @@ package org.app.donationstream.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import org.app.donationstream.Alerts;
+import org.app.donationstream.util.Alerts;
 import org.app.donationstream.RunApplication;
 
 import java.io.IOException;

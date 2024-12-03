@@ -84,6 +84,11 @@
             <version>4.1.0</version>
         </dependency>
         <!-- Don't delete its for JavaPackager-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.18.0</version>
+        </dependency>
     </dependencies>
 
     <build>
