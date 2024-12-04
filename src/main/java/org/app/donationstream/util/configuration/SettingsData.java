@@ -1,13 +1,13 @@
 package org.app.donationstream.util.configuration;
 
 public class SettingsData {
-    String language;
+    public String language;
     String theme;
     double height;
     double width;
     boolean maximized;
     double dividerPosition;
-    int fontSize;
+    //int fontSize;
 
     public String getLanguage() {
         return language;

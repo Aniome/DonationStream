@@ -20,7 +20,7 @@ public class LoginController {
         boolean username = login.getText().equals("1");
         boolean userPassword = password.getText().equals("1");
         if (username && userPassword) {
-            RunApplication.mainPage(RunApplication.stage);
+            RunApplication.showMainPage(RunApplication.mainStage);
             return;
         }
         String loginWrongMessage = RunApplication.resourceBundle.getString("loginWrongMessage");

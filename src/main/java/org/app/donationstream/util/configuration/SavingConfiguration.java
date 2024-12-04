@@ -12,14 +12,26 @@ import java.io.IOException;
 
 public class SavingConfiguration {
     public static Stage mainStage;
-    public static Stage initStage;
+    public static Stage loginStage;
+    public static boolean loadingMainStage;
 
     public static void observableMainStage(Stage stage, MainController mainController) {
         mainStage = stage;
         mainStage.setOnHiding(windowEvent -> {
+            closeWindow(loginStage);
+
             saveConfiguration(stage, mainController);
 
-            if (initStage == null) {
+            if (loginStage == null) {
+                HibernateUtil.tearDown();
+            }
+        });
+    }
+
+    public static void observableLoginStage(Stage stage) {
+        loginStage = stage;
+        stage.setOnHiding(windowEvent -> {
+            if (mainStage == null) {
                 HibernateUtil.tearDown();
             }
         });
@@ -28,9 +40,9 @@ public class SavingConfiguration {
     private static void saveConfiguration(Stage stage, MainController mainController) {
         SettingsData settingsData = generateSettingsData(stage, mainController);
         ObjectMapper objectMapper = new ObjectMapper();
-        String settings = RunApplication.appPath + "/settings.json";
+        String settingsPath = RunApplication.appPath + "/settings.json";
         try {
-            objectMapper.writeValue(new File(settings), settingsData);
+            objectMapper.writeValue(new File(settingsPath), settingsData);
         } catch (IOException e) {
             Alerts.createAndShowError(e.getMessage());
         }
@@ -47,8 +59,8 @@ public class SavingConfiguration {
 
         settingsData.setMaximized(isMaximized);
         settingsData.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
-        //settingsData.setTheme(ApplyConfiguration.theme);
-        //settingsData.setLanguage(language);
+        settingsData.setTheme(ApplyConfiguration.theme);
+        settingsData.setLanguage(ApplyConfiguration.getLanguage());
         return settingsData;
     }
 

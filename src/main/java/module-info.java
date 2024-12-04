@@ -13,4 +13,12 @@ module org.app.donationstream {
     opens org.app.donationstream.controllers;
     exports org.app.donationstream.controllers;
     opens org.app.donationstream.image;
+    exports org.app.donationstream.util;
+    opens org.app.donationstream.util;
+    exports org.app.donationstream.util.configuration;
+    opens org.app.donationstream.util.configuration;
+    exports org.app.donationstream.entity;
+    opens org.app.donationstream.entity;
+    exports org.app.donationstream.dao;
+    opens org.app.donationstream.dao;
 }

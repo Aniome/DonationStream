@@ -1,16 +1,17 @@
 package org.app.donationstream;
 
-import atlantafx.base.theme.Dracula;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.app.donationstream.controllers.LoginController;
+import org.app.donationstream.controllers.MainController;
 import org.app.donationstream.util.HibernateUtil;
+import org.app.donationstream.util.configuration.ApplyConfiguration;
+import org.app.donationstream.util.configuration.SavingConfiguration;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class RunApplication extends Application {
@@ -19,39 +20,26 @@ public class RunApplication extends Application {
     private static final int mainWidth = 1280;
     private static final int mainHeight = 720;
     public static ResourceBundle resourceBundle;
-    public static Stage stage;
+    public static Stage mainStage;
     public static String appPath;
 
     @Override
     public void start(Stage stage) throws IOException {
-        Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
-        resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
+        ApplyConfiguration.build(stage);
         HibernateUtil.setUp();
-        RunApplication.stage = stage;
 
+        mainStage = stage;
         boolean isAuthenticated = true;
 
         if (isAuthenticated) {
-            mainPage(stage);
+            showMainPage(stage);
         } else {
-            loginPage(stage);
+            showLoginPage(stage);
         }
 
     }
 
-    public static void setIcon(Stage stage){
-        stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("image/donate_icon.png"))));
-    }
-
-    public static void prepareStage(double height, double width, Scene scene, String title, Stage stage){
-        stage.setTitle(title);
-        stage.setScene(scene);
-        stage.setMinWidth(width);
-        stage.setMinHeight(height);
-        stage.show();
-    }
-
-    public static void loginPage(Stage stage) throws IOException {
+    public static void showLoginPage(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/login-view.fxml"),
                 resourceBundle);
         Scene scene = new Scene(fxmlLoader.load(), loginWidth, loginHeight);
@@ -59,15 +47,31 @@ public class RunApplication extends Application {
         stage.setResizable(false);
         String loginTitle = resourceBundle.getString("loginTitle");
         prepareStage(loginHeight, loginWidth, scene, loginTitle, stage);
+        SavingConfiguration.observableLoginStage(stage);
     }
 
-    public static void mainPage(Stage stage) throws IOException {
+    public static void showMainPage(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"),
                 resourceBundle);
         Scene scene = new Scene(fxmlLoader.load(), mainWidth, mainHeight);
+        MainController mainController = fxmlLoader.getController();
         setIcon(stage);
         String mainTitle = resourceBundle.getString("mainTitle");
         prepareStage(loginHeight, loginWidth, scene, mainTitle, stage);
+        mainController.afterShowing();
+        SavingConfiguration.observableMainStage(mainStage, mainController);
+    }
+
+    public static void setIcon(Stage stage) {
+        stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("image/donate_icon.png"))));
+    }
+
+    public static void prepareStage(double height, double width, Scene scene, String title, Stage stage) {
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.setMinWidth(width);
+        stage.setMinHeight(height);
+        stage.show();
     }
 
     public static void main(String[] args) {
