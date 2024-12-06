@@ -8,16 +8,20 @@ import org.hibernate.exception.GenericJDBCException;
 import java.util.List;
 
 public class jwtStorageDAO {
-    public List<jwtStorage> getJwtTokens() {
-        try (Session session = HibernateUtil.sessionFactory.openSession()) {
-            return session.createQuery("from jwtStorage", jwtStorage.class).getResultList();
+    public static List<jwtStorage> getJwtTokens() {
+        Session session = HibernateUtil.sessionFactory.openSession();
+        try {
+            List<jwtStorage> jwtStorage = session.createQuery("from jwtStorage", jwtStorage.class).getResultList();
+            session.close();
+            return jwtStorage;
         } catch (GenericJDBCException e) {
-            //create table
+            jwtStorage jwtStorage = new jwtStorage(0, "", "");
+            session.persist(jwtStorage);
             return null;
         }
     }
 
-    public void setJwtTokens(List<jwtStorage> jwtTokens) {
+    public static void setJwtTokens(List<jwtStorage> jwtTokens) {
         HibernateUtil.sessionFactory.inTransaction(session -> {
             session.persist(jwtTokens);
         });

@@ -7,7 +7,7 @@ public class SettingsData {
     double width;
     boolean maximized;
     double dividerPosition;
-    //int fontSize;
+    int fontSize;
 
     public String getLanguage() {
         return language;
@@ -57,4 +57,11 @@ public class SettingsData {
         this.dividerPosition = dividerPosition;
     }
 
+    public int getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
+    }
 }

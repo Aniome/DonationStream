@@ -39,4 +39,13 @@ public class jwtStorage {
     public void setJwtRefreshToken(String jwtRefreshToken) {
         this.jwtRefreshToken = jwtRefreshToken;
     }
+
+    public jwtStorage() {
+    }
+
+    public jwtStorage(Integer id, String jwtToken, String jwtRefreshToken) {
+        this.id = id;
+        this.jwtToken = jwtToken;
+        this.jwtRefreshToken = jwtRefreshToken;
+    }
 }

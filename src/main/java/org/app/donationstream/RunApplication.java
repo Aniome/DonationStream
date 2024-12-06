@@ -7,11 +7,14 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.app.donationstream.controllers.LoginController;
 import org.app.donationstream.controllers.MainController;
+import org.app.donationstream.dao.jwtStorageDAO;
+import org.app.donationstream.entity.jwtStorage;
 import org.app.donationstream.util.HibernateUtil;
 import org.app.donationstream.util.configuration.ApplyConfiguration;
 import org.app.donationstream.util.configuration.SavingConfiguration;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class RunApplication extends Application {
@@ -23,14 +26,16 @@ public class RunApplication extends Application {
     public static Stage mainStage;
     public static String appPath;
 
+
     @Override
     public void start(Stage stage) throws IOException {
-        ApplyConfiguration.build(stage);
         HibernateUtil.setUp();
+        ApplyConfiguration.build(stage);
 
-        mainStage = stage;
+        List<jwtStorage> jwtTokens = jwtStorageDAO.getJwtTokens();
+        //send request
         boolean isAuthenticated = true;
-
+        mainStage = stage;
         if (isAuthenticated) {
             showMainPage(stage);
         } else {

@@ -18,9 +18,9 @@ import java.util.ResourceBundle;
 public class ApplyConfiguration {
     private static double dividerPosition;
     public static String theme;
-    private static BorderPane leftPanelBorderPane;
     private static final String dark = "Dark";
     private static String language;
+    private static int fontSize;
 
     public static void build(Stage mainStage) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -50,20 +50,23 @@ public class ApplyConfiguration {
 
             mainStage.setMaximized(settingsData.maximized);
 
+            fontSize = settingsData.fontSize;
+
             dividerPosition = settingsData.dividerPosition;
         } catch (FileNotFoundException e) {
-            applyDefaultSettings(mainStage);
+            applyDefaultSettings();
         } catch (IOException e) {
             Alerts.createAndShowWarning(e.getMessage());
         }
     }
 
-    private static void applyDefaultSettings(Stage mainStage) {
+    private static void applyDefaultSettings() {
         RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
         language = "en";
 
         theme = dark;
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
+        fontSize = 20;
 
         dividerPosition = 0.13;
     }
@@ -74,5 +77,9 @@ public class ApplyConfiguration {
 
     public static String getLanguage() {
         return language;
+    }
+
+    public static int getFontSize() {
+        return fontSize;
     }
 }

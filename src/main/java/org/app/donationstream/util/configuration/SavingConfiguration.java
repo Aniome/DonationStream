@@ -57,6 +57,7 @@ public class SavingConfiguration {
             settingsData.setWidth(stage.getWidth());
         }
 
+        settingsData.setFontSize(ApplyConfiguration.getFontSize());
         settingsData.setMaximized(isMaximized);
         settingsData.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
         settingsData.setTheme(ApplyConfiguration.theme);
