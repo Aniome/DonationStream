@@ -1,10 +1,12 @@
 package org.app.donationstream.util;
 
+import org.app.donationstream.entity.jwtStorage;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.app.donationstream.RunApplication;
+import org.hibernate.cfg.Configuration;
 
 import java.io.File;
 import java.util.List;
@@ -22,11 +24,17 @@ public class HibernateUtil {
                 .applySetting("hibernate.connection.url", dbPath)
                 .build();
         try {
-            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+            //sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+            Configuration configuration = new Configuration(new MetadataSources(registry));
+            //configuration.configure("hibernate.properties");
+            //configuration.addClass(jwtStorage.class);
+            configuration.addAnnotatedClass(jwtStorage.class);
+            sessionFactory = configuration.buildSessionFactory();
         } catch (Exception e) {
             // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
             // so destroy it manually.
-            Alerts.createAndShowWarning(e.getMessage());
+            //Alerts.createAndShowWarning(e.getMessage());
+            System.out.println(e.getMessage());
             StandardServiceRegistryBuilder.destroy(registry);
         }
     }

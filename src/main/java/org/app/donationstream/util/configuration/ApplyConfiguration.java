@@ -4,82 +4,77 @@ import atlantafx.base.theme.CupertinoLight;
 import atlantafx.base.theme.Dracula;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.app.donationstream.RunApplication;
-import org.app.donationstream.util.Alerts;
+import org.app.donationstream.entity.SettingsData;
+import org.app.donationstream.entity.jwtStorage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ApplyConfiguration {
-    private static double dividerPosition;
     public static String theme;
-    private static final String dark = "Dark";
-    private static String language;
-    private static int fontSize;
+    private static final String THEME = "Dark";
+    private static SettingsData settingsData;
 
-    public static void build(Stage mainStage) {
+    public static void build() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            SettingsData settingsData = objectMapper.readValue(new File(RunApplication.appPath +
+            settingsData = objectMapper.readValue(new File(RunApplication.appPath +
                     "/settings.json"), SettingsData.class);
 
-            if (settingsData.language.equals("en")) {
+            if (settingsData.getLanguage().equals("en")) {
                 RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
-                language = "en";
             } else {
                 RunApplication.resourceBundle = ResourceBundle.getBundle("local/text",
                         Locale.of("ru"));
-                language = "ru";
             }
 
-            if (settingsData.theme.equals(dark)) {
-                theme = dark;
+            if (settingsData.getTheme().equals(THEME)) {
+                theme = THEME;
                 Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
             } else {
                 theme = "Light";
                 Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
             }
-
-            mainStage.setHeight(settingsData.height);
-            mainStage.setWidth(settingsData.width);
-
-            mainStage.setMaximized(settingsData.maximized);
-
-            fontSize = settingsData.fontSize;
-
-            dividerPosition = settingsData.dividerPosition;
         } catch (FileNotFoundException e) {
             applyDefaultSettings();
         } catch (IOException e) {
-            Alerts.createAndShowWarning(e.getMessage());
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void applySettingsOnMainPage(Stage mainStage) {
+        if (settingsData == null) {
+            return;
+        }
+        mainStage.setHeight(settingsData.getHeight());
+        mainStage.setWidth(settingsData.getWidth());
+
+        mainStage.setMaximized(settingsData.isMaximized());
+    }
+
+    public static jwtStorage getJwtTokens() {
+        try (FileInputStream inputStream = new FileInputStream(RunApplication.appPath + "/data.ser");
+             ObjectInputStream objectInput = new ObjectInputStream(inputStream)) {
+            return (jwtStorage) objectInput.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
         }
     }
 
     private static void applyDefaultSettings() {
         RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
-        language = "en";
-
-        theme = dark;
+        settingsData = new SettingsData("en", THEME, 1280, 720, false, 0.13);
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
-        fontSize = 20;
-
-        dividerPosition = 0.13;
     }
 
     public static double getDividerPosition() {
-        return dividerPosition;
+        return settingsData.getDividerPosition();
     }
 
     public static String getLanguage() {
-        return language;
-    }
-
-    public static int getFontSize() {
-        return fontSize;
+        return settingsData.getLanguage();
     }
 }

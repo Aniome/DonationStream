@@ -1,13 +1,25 @@
-package org.app.donationstream.util.configuration;
+package org.app.donationstream.entity;
 
 public class SettingsData {
-    public String language;
+    String language;
     String theme;
     double height;
     double width;
     boolean maximized;
     double dividerPosition;
-    int fontSize;
+
+    public SettingsData() {
+    }
+
+    public SettingsData(String language, String theme, double height, double width, boolean maximized,
+                        double dividerPosition) {
+        this.language = language;
+        this.theme = theme;
+        this.height = height;
+        this.width = width;
+        this.maximized = maximized;
+        this.dividerPosition = dividerPosition;
+    }
 
     public String getLanguage() {
         return language;
@@ -55,13 +67,5 @@ public class SettingsData {
 
     public void setDividerPosition(double dividerPosition) {
         this.dividerPosition = dividerPosition;
-    }
-
-    public int getFontSize() {
-        return fontSize;
-    }
-
-    public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
     }
 }

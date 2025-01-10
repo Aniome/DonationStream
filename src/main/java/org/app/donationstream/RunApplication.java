@@ -5,16 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.app.donationstream.controllers.LoginController;
 import org.app.donationstream.controllers.MainController;
-import org.app.donationstream.dao.jwtStorageDAO;
 import org.app.donationstream.entity.jwtStorage;
-import org.app.donationstream.util.HibernateUtil;
 import org.app.donationstream.util.configuration.ApplyConfiguration;
 import org.app.donationstream.util.configuration.SavingConfiguration;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class RunApplication extends Application {
@@ -29,12 +26,13 @@ public class RunApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        HibernateUtil.setUp();
-        ApplyConfiguration.build(stage);
+        //HibernateUtil.setUp();
+        buildAppPath();
+        ApplyConfiguration.build();
+        jwtStorage jwtTokens = ApplyConfiguration.getJwtTokens();
 
-        List<jwtStorage> jwtTokens = jwtStorageDAO.getJwtTokens();
-        //send request
-        boolean isAuthenticated = true;
+        boolean isAuthenticated = jwtTokens != null;
+
         mainStage = stage;
         if (isAuthenticated) {
             showMainPage(stage);
@@ -42,6 +40,11 @@ public class RunApplication extends Application {
             showLoginPage(stage);
         }
 
+    }
+
+    private static void buildAppPath() {
+        File path = new File("");
+        appPath = path.getAbsolutePath().replace("\\", "/");
     }
 
     public static void showLoginPage(Stage stage) throws IOException {
@@ -62,7 +65,10 @@ public class RunApplication extends Application {
         MainController mainController = fxmlLoader.getController();
         setIcon(stage);
         String mainTitle = resourceBundle.getString("mainTitle");
-        prepareStage(loginHeight, loginWidth, scene, mainTitle, stage);
+        ApplyConfiguration.applySettingsOnMainPage(stage);
+        stage.setTitle(mainTitle);
+        stage.setScene(scene);
+        stage.show();
         mainController.afterShowing();
         SavingConfiguration.observableMainStage(mainStage, mainController);
     }

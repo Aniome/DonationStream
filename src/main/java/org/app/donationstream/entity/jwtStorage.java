@@ -1,28 +1,16 @@
 package org.app.donationstream.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import java.io.Serializable;
 
-@Entity
-public class jwtStorage {
-    @Id
-    @Column(name = "id")
-    private Integer id;
+public class jwtStorage implements Serializable {
+    public jwtStorage(String jwtToken, String jwtRefreshToken) {
+        this.jwtToken = jwtToken;
+        this.jwtRefreshToken = jwtRefreshToken;
+    }
 
-    @Column(name = "jwtToken")
     private String jwtToken;
 
-    @Column(name = "jwtRefreshToken")
     private String jwtRefreshToken;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getJwtToken() {
         return jwtToken;
@@ -37,15 +25,6 @@ public class jwtStorage {
     }
 
     public void setJwtRefreshToken(String jwtRefreshToken) {
-        this.jwtRefreshToken = jwtRefreshToken;
-    }
-
-    public jwtStorage() {
-    }
-
-    public jwtStorage(Integer id, String jwtToken, String jwtRefreshToken) {
-        this.id = id;
-        this.jwtToken = jwtToken;
         this.jwtRefreshToken = jwtRefreshToken;
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.stage.Stage;
 import org.app.donationstream.RunApplication;
 import org.app.donationstream.controllers.MainController;
+import org.app.donationstream.entity.SettingsData;
 import org.app.donationstream.util.Alerts;
 import org.app.donationstream.util.HibernateUtil;
 
@@ -17,7 +18,7 @@ public class SavingConfiguration {
 
     public static void observableMainStage(Stage stage, MainController mainController) {
         mainStage = stage;
-        mainStage.setOnHiding(windowEvent -> {
+        mainStage.setOnHiding(_ -> {
             closeWindow(loginStage);
 
             saveConfiguration(stage, mainController);
@@ -30,7 +31,7 @@ public class SavingConfiguration {
 
     public static void observableLoginStage(Stage stage) {
         loginStage = stage;
-        stage.setOnHiding(windowEvent -> {
+        stage.setOnHiding(_ -> {
             if (mainStage == null) {
                 HibernateUtil.tearDown();
             }
@@ -57,7 +58,6 @@ public class SavingConfiguration {
             settingsData.setWidth(stage.getWidth());
         }
 
-        settingsData.setFontSize(ApplyConfiguration.getFontSize());
         settingsData.setMaximized(isMaximized);
         settingsData.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
         settingsData.setTheme(ApplyConfiguration.theme);

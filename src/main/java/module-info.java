@@ -19,6 +19,4 @@ module org.app.donationstream {
     opens org.app.donationstream.util.configuration;
     exports org.app.donationstream.entity;
     opens org.app.donationstream.entity;
-    exports org.app.donationstream.dao;
-    opens org.app.donationstream.dao;
 }
