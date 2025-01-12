@@ -1,6 +1,6 @@
 package org.app.donationstream.util;
 
-import org.app.donationstream.entity.jwtStorage;
+import org.app.donationstream.entity.Jwt;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -28,7 +28,7 @@ public class HibernateUtil {
             Configuration configuration = new Configuration(new MetadataSources(registry));
             //configuration.configure("hibernate.properties");
             //configuration.addClass(jwtStorage.class);
-            configuration.addAnnotatedClass(jwtStorage.class);
+            configuration.addAnnotatedClass(Jwt.class);
             sessionFactory = configuration.buildSessionFactory();
         } catch (Exception e) {
             // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory

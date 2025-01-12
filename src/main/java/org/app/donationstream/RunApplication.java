@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.app.donationstream.controllers.MainController;
-import org.app.donationstream.entity.jwtStorage;
+import org.app.donationstream.entity.Jwt;
 import org.app.donationstream.util.configuration.ApplyConfiguration;
 import org.app.donationstream.util.configuration.SavingConfiguration;
 
@@ -29,7 +29,7 @@ public class RunApplication extends Application {
         //HibernateUtil.setUp();
         buildAppPath();
         ApplyConfiguration.build();
-        jwtStorage jwtTokens = ApplyConfiguration.getJwtTokens();
+        Jwt jwtTokens = ApplyConfiguration.getJwtTokens();
 
         boolean isAuthenticated = jwtTokens != null;
 

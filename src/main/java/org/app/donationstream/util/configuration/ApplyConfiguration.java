@@ -7,7 +7,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.app.donationstream.RunApplication;
 import org.app.donationstream.entity.SettingsData;
-import org.app.donationstream.entity.jwtStorage;
+import org.app.donationstream.entity.Jwt;
 
 import java.io.*;
 import java.util.Locale;
@@ -55,10 +55,10 @@ public class ApplyConfiguration {
         mainStage.setMaximized(settingsData.isMaximized());
     }
 
-    public static jwtStorage getJwtTokens() {
+    public static Jwt getJwtTokens() {
         try (FileInputStream inputStream = new FileInputStream(RunApplication.appPath + "/data.ser");
              ObjectInputStream objectInput = new ObjectInputStream(inputStream)) {
-            return (jwtStorage) objectInput.readObject();
+            return (Jwt) objectInput.readObject();
         } catch (IOException | ClassNotFoundException e) {
             return null;
         }

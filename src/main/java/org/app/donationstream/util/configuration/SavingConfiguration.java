@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.stage.Stage;
 import org.app.donationstream.RunApplication;
 import org.app.donationstream.controllers.MainController;
+import org.app.donationstream.entity.Jwt;
 import org.app.donationstream.entity.SettingsData;
 import org.app.donationstream.util.Alerts;
 import org.app.donationstream.util.HibernateUtil;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class SavingConfiguration {
     public static Stage mainStage;
@@ -32,7 +32,7 @@ public class SavingConfiguration {
     public static void observableLoginStage(Stage stage) {
         loginStage = stage;
         stage.setOnHiding(_ -> {
-            if (mainStage == null) {
+            if (mainStage == null && !loadingMainStage) {
                 HibernateUtil.tearDown();
             }
         });
@@ -63,6 +63,15 @@ public class SavingConfiguration {
         settingsData.setTheme(ApplyConfiguration.theme);
         settingsData.setLanguage(ApplyConfiguration.getLanguage());
         return settingsData;
+    }
+
+    public static void saveJwt(Jwt jwt) {
+        try (FileOutputStream outputStream = new FileOutputStream(RunApplication.appPath + "/data.ser");
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
+            objectOutputStream.writeObject(jwt);
+        } catch (IOException e) {
+            Alerts.createAndShowWarning(e.getMessage());
+        }
     }
 
     private static void closeWindow(Stage stage) {

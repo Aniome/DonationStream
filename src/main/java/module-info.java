@@ -8,6 +8,7 @@ module org.app.donationstream {
     requires java.naming;
     requires jakarta.persistence;
     requires com.fasterxml.jackson.databind;
+    requires java.net.http;
 
     exports org.app.donationstream;
     opens org.app.donationstream.controllers;
