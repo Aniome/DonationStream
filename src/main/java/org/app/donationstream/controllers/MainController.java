@@ -5,10 +5,10 @@ import javafx.scene.control.SplitPane;
 import org.app.donationstream.util.configuration.ApplyConfiguration;
 
 public class MainController {
-    @FXML
-    public SplitPane splitPane;
+//    @FXML
+//    public SplitPane splitPane;
 
     public void afterShowing() {
-        splitPane.setDividerPositions(ApplyConfiguration.getDividerPosition());
+        //splitPane.setDividerPositions(ApplyConfiguration.getDividerPosition());
     }
 }

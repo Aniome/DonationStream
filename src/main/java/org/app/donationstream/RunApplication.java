@@ -15,22 +15,24 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class RunApplication extends Application {
-    private static final int loginWidth = 600;
-    private static final int loginHeight = 400;
-    private static final int mainWidth = 1280;
-    private static final int mainHeight = 720;
+    private static final int LOGIN_WIDTH = 600;
+    private static final int LOGIN_HEIGHT = 400;
+    private static final int MAIN_WIDTH = 1280;
+    private static final int MAIN_HEIGHT = 720;
     public static ResourceBundle resourceBundle;
     public static Stage mainStage;
     public static String appPath;
+    public static String separator;
 
 
     @Override
     public void start(Stage stage) throws IOException {
         //HibernateUtil.setUp();
-        buildAppPath();
-        ApplyConfiguration.build();
-        Jwt jwtTokens = ApplyConfiguration.getJwtTokens();
+        buildAppPathAndSeparator();
+        ApplyConfiguration.loadAndApplySettings(stage);
 
+        //add validation jwt tokens
+        Jwt jwtTokens = ApplyConfiguration.getJwtTokens();
         boolean isAuthenticated = jwtTokens != null;
 
         mainStage = stage;
@@ -39,33 +41,36 @@ public class RunApplication extends Application {
         } else {
             showLoginPage(stage);
         }
-
     }
 
-    private static void buildAppPath() {
-        File path = new File("");
-        appPath = path.getAbsolutePath().replace("\\", "/");
+    public static void buildAppPathAndSeparator() {
+        String path = new File("").getAbsolutePath();
+        if (path.contains("/")) {
+            separator = "/";
+        } else {
+            separator = "\\";
+        }
+        appPath = path;
     }
 
     public static void showLoginPage(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/login-view.fxml"),
                 resourceBundle);
-        Scene scene = new Scene(fxmlLoader.load(), loginWidth, loginHeight);
+        Scene scene = new Scene(fxmlLoader.load(), LOGIN_WIDTH, LOGIN_HEIGHT);
         setIcon(stage);
         stage.setResizable(false);
         String loginTitle = resourceBundle.getString("loginTitle");
-        prepareStage(loginHeight, loginWidth, scene, loginTitle, stage);
+        prepareStage(LOGIN_HEIGHT, LOGIN_WIDTH, scene, loginTitle, stage);
         SavingConfiguration.observableLoginStage(stage);
     }
 
     public static void showMainPage(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"),
                 resourceBundle);
-        Scene scene = new Scene(fxmlLoader.load(), mainWidth, mainHeight);
+        Scene scene = new Scene(fxmlLoader.load(), MAIN_WIDTH, MAIN_HEIGHT);
         MainController mainController = fxmlLoader.getController();
         setIcon(stage);
         String mainTitle = resourceBundle.getString("mainTitle");
-        ApplyConfiguration.applySettingsOnMainPage(stage);
         stage.setTitle(mainTitle);
         stage.setScene(scene);
         stage.show();

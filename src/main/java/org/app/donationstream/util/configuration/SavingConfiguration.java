@@ -59,7 +59,8 @@ public class SavingConfiguration {
         }
 
         settingsData.setMaximized(isMaximized);
-        settingsData.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
+        //settingsData.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
+        settingsData.setDividerPosition(0.13);
         settingsData.setTheme(ApplyConfiguration.theme);
         settingsData.setLanguage(ApplyConfiguration.getLanguage());
         return settingsData;
