@@ -9,7 +9,11 @@ import org.app.donationstream.entity.SettingsData;
 import org.app.donationstream.util.Alerts;
 import org.app.donationstream.util.HibernateUtil;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.Locale;
 
 public class SavingConfiguration {
     public static Stage mainStage;
@@ -59,10 +63,12 @@ public class SavingConfiguration {
         }
 
         settingsData.setMaximized(isMaximized);
-        //settingsData.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
-        settingsData.setDividerPosition(0.13);
+        settingsData.setDividerPosition(mainController.splitPane.getDividerPositions()[0]);
         settingsData.setTheme(ApplyConfiguration.theme);
-        settingsData.setLanguage(ApplyConfiguration.getLanguage());
+        if (RunApplication.resourceBundle.getLocale().equals(Locale.ENGLISH))
+            settingsData.setLanguage("en");
+        else
+            settingsData.setLanguage("ru");
         return settingsData;
     }
 

@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.app.donationstream.RunApplication;
-import org.app.donationstream.entity.SettingsData;
 import org.app.donationstream.entity.Jwt;
+import org.app.donationstream.entity.SettingsData;
 
 import java.io.*;
 import java.util.Locale;
@@ -18,7 +18,6 @@ public class ApplyConfiguration {
     private static final String DARK = "Dark";
     public static String theme;
     private static double dividerPosition;
-    private static String language;
 
     public static void loadAndApplySettings(Stage mainStage) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -29,11 +28,9 @@ public class ApplyConfiguration {
             //language
             if (settingsData.getLanguage().equals("en")) {
                 RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
-                language = "en";
             } else {
                 RunApplication.resourceBundle = ResourceBundle.getBundle("local/text",
                         Locale.of("ru"));
-                language = "ru";
             }
 
             //theme
@@ -52,7 +49,7 @@ public class ApplyConfiguration {
 
             mainStage.setMaximized(settingsData.isMaximized());
         } catch (FileNotFoundException e) {
-            applyDefaultSettings();
+            applyDefaultSettings(mainStage);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -67,17 +64,17 @@ public class ApplyConfiguration {
         }
     }
 
-    private static void applyDefaultSettings() {
+    private static void applyDefaultSettings(Stage mainStage) {
         RunApplication.resourceBundle = ResourceBundle.getBundle("local/text", Locale.ENGLISH);
-        SettingsData settingsData = new SettingsData("en", DARK, 1280, 720, false, 0.13);
+        theme = DARK;
+        dividerPosition = 0.13;
+        mainStage.setHeight(1280);
+        mainStage.setWidth(720);
+        mainStage.setMaximized(false);
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
     }
 
     public static double getDividerPosition() {
         return dividerPosition;
-    }
-
-    public static String getLanguage() {
-        return language;
     }
 }

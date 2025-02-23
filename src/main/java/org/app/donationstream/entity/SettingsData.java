@@ -11,16 +11,6 @@ public class SettingsData {
     public SettingsData() {
     }
 
-    public SettingsData(String language, String theme, double height, double width, boolean maximized,
-                        double dividerPosition) {
-        this.language = language;
-        this.theme = theme;
-        this.height = height;
-        this.width = width;
-        this.maximized = maximized;
-        this.dividerPosition = dividerPosition;
-    }
-
     public String getLanguage() {
         return language;
     }
