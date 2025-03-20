@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: transparent;"
+            xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.app.donationstream.controllers.DonationController">
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="191.0" layoutY="65.0" pickOnBounds="true"
+               preserveRatio="true" AnchorPane.leftAnchor="191.0" AnchorPane.rightAnchor="209.0"
+               AnchorPane.topAnchor="65.0">
+        <Image url="@../image/donate.png"/>
+    </ImageView>
+    <Label fx:id="title" layoutX="145.0" layoutY="165.0" prefHeight="53.0" prefWidth="360.0"
+           text="Username - 5 USD!" textAlignment="CENTER" textFill="#171616" AnchorPane.leftAnchor="145.0"
+           AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="165.0">
+        <font>
+            <Font size="36.0"/>
+        </font>
+    </Label>
+    <Label fx:id="message" layoutX="245.0" layoutY="254.0" prefHeight="38.0" prefWidth="111.0" text="Message"
+           textFill="#1b1818" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="244.0"
+           AnchorPane.topAnchor="254.0">
+        <font>
+            <Font size="26.0"/>
+        </font>
+    </Label>
+</AnchorPane>

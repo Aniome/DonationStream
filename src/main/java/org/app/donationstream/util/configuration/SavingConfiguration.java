@@ -7,38 +7,26 @@ import org.app.donationstream.controllers.MainController;
 import org.app.donationstream.entity.Jwt;
 import org.app.donationstream.entity.SettingsData;
 import org.app.donationstream.util.Alerts;
-import org.app.donationstream.util.HibernateUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Locale;
+import java.util.Optional;
 
 public class SavingConfiguration {
     public static Stage mainStage;
     public static Stage loginStage;
-    public static boolean loadingMainStage;
+    public static Stage donationStage;
 
     public static void observableMainStage(Stage stage, MainController mainController) {
         mainStage = stage;
         mainStage.setOnHiding(_ -> {
             closeWindow(loginStage);
+            closeWindow(donationStage);
 
             saveConfiguration(stage, mainController);
-
-            if (loginStage == null) {
-                HibernateUtil.tearDown();
-            }
-        });
-    }
-
-    public static void observableLoginStage(Stage stage) {
-        loginStage = stage;
-        stage.setOnHiding(_ -> {
-            if (mainStage == null && !loadingMainStage) {
-                HibernateUtil.tearDown();
-            }
         });
     }
 
@@ -82,7 +70,10 @@ public class SavingConfiguration {
     }
 
     private static void closeWindow(Stage stage) {
-        if (stage != null)
-            stage.close();
+        Optional.ofNullable(stage).ifPresent(Stage::close);
+    }
+
+    public static void setLoginStage(Stage loginStage) {
+        SavingConfiguration.loginStage = loginStage;
     }
 }

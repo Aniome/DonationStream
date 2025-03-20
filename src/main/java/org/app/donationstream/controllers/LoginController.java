@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.app.donationstream.RunApplication;
 import org.app.donationstream.entity.Jwt;
 import org.app.donationstream.util.Alerts;
-import org.app.donationstream.RunApplication;
 import org.app.donationstream.util.configuration.SavingConfiguration;
 
 import java.io.IOException;
@@ -39,8 +39,7 @@ public class LoginController {
                 ObjectMapper objectMapper = new ObjectMapper();
                 Jwt jwt = objectMapper.readValue(response.body(), Jwt.class);
                 SavingConfiguration.saveJwt(jwt);
-                SavingConfiguration.loadingMainStage = true;
-                RunApplication.showMainPage(RunApplication.mainStage);
+                RunApplication.showMainPage();
                 return;
             }
         } catch (InterruptedException | URISyntaxException | IOException e) {

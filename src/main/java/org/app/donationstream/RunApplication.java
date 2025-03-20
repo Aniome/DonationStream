@@ -5,8 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import org.app.donationstream.controllers.DonationController;
 import org.app.donationstream.controllers.MainController;
 import org.app.donationstream.entity.Jwt;
+import org.app.donationstream.util.Alerts;
 import org.app.donationstream.util.configuration.ApplyConfiguration;
 import org.app.donationstream.util.configuration.SavingConfiguration;
 
@@ -17,8 +20,8 @@ import java.util.ResourceBundle;
 public class RunApplication extends Application {
     private static final int LOGIN_WIDTH = 600;
     private static final int LOGIN_HEIGHT = 400;
-    private static final int MAIN_WIDTH = 1280;
-    private static final int MAIN_HEIGHT = 720;
+    private static final int MAIN_WIDTH = 800;
+    private static final int MAIN_HEIGHT = 600;
     public static ResourceBundle resourceBundle;
     public static Stage mainStage;
     public static String appPath;
@@ -26,8 +29,7 @@ public class RunApplication extends Application {
 
 
     @Override
-    public void start(Stage stage) throws IOException {
-        //HibernateUtil.setUp();
+    public void start(Stage stage) {
         buildAppPathAndSeparator();
         ApplyConfiguration.loadAndApplySettings(stage);
 
@@ -37,9 +39,9 @@ public class RunApplication extends Application {
 
         mainStage = stage;
         if (isAuthenticated) {
-            showMainPage(stage);
+            showMainPage();
         } else {
-            showLoginPage(stage);
+            showLoginPage();
         }
     }
 
@@ -53,40 +55,65 @@ public class RunApplication extends Application {
         appPath = path;
     }
 
-    public static void showLoginPage(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/login-view.fxml"),
-                resourceBundle);
-        Scene scene = new Scene(fxmlLoader.load(), LOGIN_WIDTH, LOGIN_HEIGHT);
-        setIcon(stage);
-        stage.setResizable(false);
-        String loginTitle = resourceBundle.getString("loginTitle");
-        prepareStage(LOGIN_HEIGHT, LOGIN_WIDTH, scene, loginTitle, stage);
-        SavingConfiguration.observableLoginStage(stage);
+    public static void showLoginPage() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/login-view.fxml"),
+                    resourceBundle);
+            Scene scene = new Scene(fxmlLoader.load(), LOGIN_WIDTH, LOGIN_HEIGHT);
+            Stage initialStage = new Stage();
+            SavingConfiguration.setLoginStage(initialStage);
+            setIcon(initialStage);
+            initialStage.setResizable(false);
+            String loginTitle = resourceBundle.getString("loginTitle");
+            prepareStage(LOGIN_HEIGHT, LOGIN_WIDTH, scene, loginTitle, initialStage);
+        } catch (IOException e) {
+            Alerts.createAndShowError(String.valueOf(e));
+        }
     }
 
-    public static void showMainPage(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"),
-                resourceBundle);
-        Scene scene = new Scene(fxmlLoader.load(), MAIN_WIDTH, MAIN_HEIGHT);
-        MainController mainController = fxmlLoader.getController();
-        setIcon(stage);
-        String mainTitle = resourceBundle.getString("mainTitle");
-        stage.setTitle(mainTitle);
-        stage.setScene(scene);
-        stage.show();
-        mainController.afterShowing();
-        SavingConfiguration.observableMainStage(mainStage, mainController);
+    public static void showMainPage() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/main-view.fxml"),
+                    resourceBundle);
+            Scene scene = new Scene(fxmlLoader.load(), MAIN_WIDTH, MAIN_HEIGHT);
+            MainController mainController = fxmlLoader.getController();
+            setIcon(mainStage);
+            prepareStage(MAIN_HEIGHT, MAIN_WIDTH, scene, resourceBundle.getString("mainTitle"), mainStage);
+            mainController.afterShowing();
+            SavingConfiguration.observableMainStage(mainStage, mainController);
+        } catch (IOException e) {
+            Alerts.createAndShowError(String.valueOf(e));
+        }
+    }
+
+    public static DonationController showDonationAlert() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(RunApplication.class.getResource("fxmls/donate-view.fxml"),
+                    resourceBundle);
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage donationStage = new Stage();
+            donationStage.initStyle(StageStyle.UNDECORATED);
+            DonationController donationController = fxmlLoader.getController();
+            donationController.initialize(donationStage);
+            SavingConfiguration.donationStage = donationStage;
+            prepareStage(200, 200, scene, "Donate", donationStage);
+            donationController.afterShowing();
+            return donationController;
+        } catch (IOException e) {
+            Alerts.createAndShowError(String.valueOf(e));
+            return null;
+        }
     }
 
     public static void setIcon(Stage stage) {
         stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("image/donate_icon.png"))));
     }
 
-    public static void prepareStage(double height, double width, Scene scene, String title, Stage stage) {
+    public static void prepareStage(double minHeight, double minWidth, Scene scene, String title, Stage stage) {
         stage.setTitle(title);
         stage.setScene(scene);
-        stage.setMinWidth(width);
-        stage.setMinHeight(height);
+        stage.setMinWidth(minWidth);
+        stage.setMinHeight(minHeight);
         stage.show();
     }
 

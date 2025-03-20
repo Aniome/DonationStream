@@ -59,9 +59,11 @@
                     <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                         <children>
                             <Button layoutX="299.0" layoutY="311.0" mnemonicParsing="false"
-                                    text="Тестовое уведомление"/>
+                                    onMouseClicked="#testDonateAlert" text="Тестовое уведомление"/>
                             <Button layoutX="245.0" layoutY="223.0" mnemonicParsing="false"
-                                    text="Запустить окно для отображения донатов"/>
+                                    onMouseClicked="#showWindowDonate" text="Запустить окно для отображения донатов"/>
+                            <Button layoutX="236.0" layoutY="270.0" mnemonicParsing="false"
+                                    onMouseClicked="#hideWindowDonate" text="Скрыть окно окно для отображения донатов"/>
                         </children>
                     </AnchorPane>
                 </center>
