@@ -31,16 +31,8 @@ public class ResizeHelper {
         resizeListener.setMaxWidth(maxWidth);
         resizeListener.setMaxHeight(maxHeight);
 
-
         ObservableList<Node> children = stage.getScene().getRoot().getChildrenUnmodifiable();
-        for (Node child : children) {
-            if (child instanceof ScrollBar) {
-                isScrollbar = true;
-            } else if (!(child instanceof ScrollBar)) {
-                isScrollbar = false;
-                addListenerDeeply(child, resizeListener);
-            }
-        }
+        changingScrollBar(children, resizeListener);
     }
 
     private static void addListenerDeeply(Node node, EventHandler<MouseEvent> listener) {
@@ -49,25 +41,27 @@ public class ResizeHelper {
         node.addEventHandler(MouseEvent.MOUSE_DRAGGED, listener);
         node.addEventHandler(MouseEvent.MOUSE_EXITED, listener);
         node.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET, listener);
-        if (node instanceof Parent) {
-            Parent parent = (Parent) node;
+        if (node instanceof Parent parent) {
             ObservableList<Node> children = parent.getChildrenUnmodifiable();
-            for (Node child : children) {
-                if (child instanceof ScrollBar) {
-                    isScrollbar = true;
-                } else if (!(child instanceof ScrollBar)) {
-                    isScrollbar = false;
-                    addListenerDeeply(child, listener);
-                }
+            changingScrollBar(children, listener);
+        }
+    }
+
+    private static void changingScrollBar(ObservableList<Node> children, EventHandler<MouseEvent> listener) {
+        for (Node child : children) {
+            if (child instanceof ScrollBar) {
+                isScrollbar = true;
+            } else {
+                isScrollbar = false;
+                addListenerDeeply(child, listener);
             }
         }
     }
 
     static class ResizeListener implements EventHandler<MouseEvent> {
-        private Stage stage;
+        private final Stage stage;
         private Cursor cursorEvent = Cursor.DEFAULT;
         private boolean resizing = true;
-        private int border = 4;
         private double startX = 0;
         private double startY = 0;
         private double screenOffsetX = 0;
@@ -109,7 +103,8 @@ public class ResizeHelper {
                     sceneWidth = scene.getWidth(),
                     sceneHeight = scene.getHeight();
 
-            if (MouseEvent.MOUSE_MOVED.equals(mouseEventType) && stage.isMaximized() == false) {
+            int border = 4;
+            if (MouseEvent.MOUSE_MOVED.equals(mouseEventType) && !stage.isMaximized()) {
                 if (mouseEventX < border && mouseEventY < border) {
                     cursorEvent = Cursor.NW_RESIZE;
                 } else if (mouseEventX < border && mouseEventY > sceneHeight - border) {
@@ -178,7 +173,7 @@ public class ResizeHelper {
 
             }
 
-            if (MouseEvent.MOUSE_DRAGGED.equals(mouseEventType) && Cursor.DEFAULT.equals(cursorEvent) && resizing == false) {
+            if (MouseEvent.MOUSE_DRAGGED.equals(mouseEventType) && Cursor.DEFAULT.equals(cursorEvent) && !resizing) {
                 stage.setX(mouseEvent.getScreenX() + screenOffsetX);
                 stage.setY(mouseEvent.getScreenY() + screenOffsetY);
 
@@ -197,6 +192,5 @@ public class ResizeHelper {
             height = Math.max(height, minHeight);
             stage.setHeight(height);
         }
-
     }
 }

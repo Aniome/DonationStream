@@ -15,12 +15,16 @@ public class MainController {
     private DonationController donationController;
 
     public void initialize() {
+        loadDataInTreeView();
+    }
+
+    private void loadDataInTreeView() {
         TreeItem<String> root = new TreeItem<>("");
         treeView.setRoot(root);
         String[] items = new String[]{
 
         };
-        //root.getChildren().addAll()
+        //root.getChildren().addAll();
     }
 
     @FXML

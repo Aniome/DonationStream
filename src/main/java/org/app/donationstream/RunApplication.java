@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.app.donationstream.controllers.DonationController;
@@ -92,7 +93,8 @@ public class RunApplication extends Application {
                     resourceBundle);
             Scene scene = new Scene(fxmlLoader.load());
             Stage donationStage = new Stage();
-            donationStage.initStyle(StageStyle.UNDECORATED);
+            donationStage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
             DonationController donationController = fxmlLoader.getController();
             donationController.initialize(donationStage);
             SavingConfiguration.donationStage = donationStage;

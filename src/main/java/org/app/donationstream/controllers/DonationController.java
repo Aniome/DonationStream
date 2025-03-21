@@ -4,6 +4,7 @@ import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.app.donationstream.util.ResizeHelper;
@@ -20,6 +21,7 @@ public class DonationController {
 
     public void initialize(Stage stage) {
         donationStage = stage;
+        anchorPane.setBackground(Background.EMPTY);
     }
 
     public void afterShowing() {
