@@ -7,6 +7,8 @@ import javafx.scene.control.TreeView;
 import org.app.donationstream.RunApplication;
 import org.app.donationstream.util.configuration.ApplyConfiguration;
 
+import java.util.ResourceBundle;
+
 public class MainController {
     @FXML
     public SplitPane splitPane;
@@ -21,9 +23,31 @@ public class MainController {
     private void loadDataInTreeView() {
         TreeItem<String> root = new TreeItem<>("");
         treeView.setRoot(root);
-        String[] items = new String[]{
+        ResourceBundle resourceBundle = RunApplication.resourceBundle;
 
-        };
+        TreeItem<String> dataReports = new TreeItem<>(resourceBundle.getString("mainSettingsDataReports"));
+        String[] dataReportsSettings = {resourceBundle.getString("mainSettingsDashboard"),
+                resourceBundle.getString("mainSettingsActivityFeed"),
+                resourceBundle.getString("mainSettingsRecentDonations")};
+        for (String setting : dataReportsSettings) {
+            TreeItem<String> item = new TreeItem<>(setting);
+            dataReports.getChildren().add(item);
+        }
+        dataReports.setExpanded(true);
+
+        resourceBundle.getString("mainSettingsDonationPage");
+        resourceBundle.getString("mainSettingsDonationPageSettings");
+        resourceBundle.getString("mainSettingsSettingsAlerts");
+        resourceBundle.getString("mainSettingsStreamStatistics");
+        resourceBundle.getString("mainSettingsDonationGoals");
+
+        resourceBundle.getString("mainSettingsRevenue");
+        resourceBundle.getString("mainSettingsPayments");
+        resourceBundle.getString("mainSettingsPaymentHistory");
+
+        resourceBundle.getString("mainSettingsSupport");
+
+
         //root.getChildren().addAll();
     }
 
