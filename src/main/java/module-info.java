@@ -9,11 +9,12 @@ module org.app.donationstream {
     requires jakarta.persistence;
     requires com.fasterxml.jackson.databind;
     requires java.net.http;
+    //requires org.scenicview.scenicview;
 
     exports org.app.donationstream;
     opens org.app.donationstream.controllers;
     exports org.app.donationstream.controllers;
-    opens org.app.donationstream.image;
+    opens org.app.donationstream.icons;
     exports org.app.donationstream.util;
     opens org.app.donationstream.util;
     exports org.app.donationstream.util.configuration;

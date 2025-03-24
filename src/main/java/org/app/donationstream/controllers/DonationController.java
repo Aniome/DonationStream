@@ -39,7 +39,7 @@ public class DonationController {
     public void testAlert() {
         PauseTransition pause = new PauseTransition(Duration.seconds(5));
         donationStage.show();
-        pause.setOnFinished(_ -> {
+        pause.setOnFinished(event -> {
             donationStage.hide();
         });
         pause.play();

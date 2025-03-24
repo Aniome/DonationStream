@@ -25,6 +25,18 @@
             <artifactId>javafx-fxml</artifactId>
             <version>22.0.1</version>
         </dependency>
+        <!--
+                 <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>24</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>24</version>
+        </dependency>
+        -->
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
@@ -72,7 +84,7 @@
             <artifactId>hibernate-community-dialects</artifactId>
             <version>6.1.7.Final</version>
         </dependency>
-        <!-- Don't delete its for JavaPackager-->
+        <!-- Don't delete it's for JavaPackager-->
         <dependency>
             <groupId>jakarta.activation</groupId>
             <artifactId>jakarta.activation-api</artifactId>
@@ -83,7 +95,7 @@
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
             <version>4.1.0</version>
         </dependency>
-        <!-- Don't delete its for JavaPackager-->
+        <!-- Don't delete it's for JavaPackager-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -95,6 +107,15 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+        <!--
+                <dependency>
+            <groupId>local</groupId>
+            <artifactId>scenicview</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/scenicview.jar</systemPath>
+        </dependency>
+        -->
     </dependencies>
 
     <build>
@@ -102,10 +123,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>3.11.0</version>
                 <configuration>
-                    <source>22</source>
-                    <target>22</target>
+                    <source>21</source>
+                    <target>21</target>
                 </configuration>
             </plugin>
             <plugin>

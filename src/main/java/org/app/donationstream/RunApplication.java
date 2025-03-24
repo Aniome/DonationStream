@@ -78,6 +78,8 @@ public class RunApplication extends Application {
                     resourceBundle);
             Scene scene = new Scene(fxmlLoader.load(), MAIN_WIDTH, MAIN_HEIGHT);
             MainController mainController = fxmlLoader.getController();
+            ApplyConfiguration.setMainScene(scene);
+            ApplyConfiguration.changeThemeCssOnMainScene();
             setIcon(mainStage);
             prepareStage(MAIN_HEIGHT, MAIN_WIDTH, scene, resourceBundle.getString("mainTitle"), mainStage);
             mainController.afterShowing();
@@ -108,7 +110,7 @@ public class RunApplication extends Application {
     }
 
     public static void setIcon(Stage stage) {
-        stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("image/donate_icon.png"))));
+        stage.getIcons().add(new Image(String.valueOf(RunApplication.class.getResource("icons/donate_icon.png"))));
     }
 
     public static void prepareStage(double minHeight, double minWidth, Scene scene, String title, Stage stage) {
@@ -117,6 +119,7 @@ public class RunApplication extends Application {
         stage.setMinWidth(minWidth);
         stage.setMinHeight(minHeight);
         stage.show();
+        //ScenicView.show(scene);
     }
 
     public static void main(String[] args) {

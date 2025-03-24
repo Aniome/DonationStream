@@ -22,7 +22,7 @@ public class SavingConfiguration {
 
     public static void observableMainStage(Stage stage, MainController mainController) {
         mainStage = stage;
-        mainStage.setOnHiding(_ -> {
+        mainStage.setOnHiding(event -> {
             closeWindow(loginStage);
             closeWindow(donationStage);
 
@@ -33,7 +33,7 @@ public class SavingConfiguration {
     private static void saveConfiguration(Stage stage, MainController mainController) {
         SettingsData settingsData = generateSettingsData(stage, mainController);
         ObjectMapper objectMapper = new ObjectMapper();
-        String settingsPath = RunApplication.appPath + "/settings.json";
+        String settingsPath = RunApplication.appPath + RunApplication.separator + "settings.json";
         try {
             objectMapper.writeValue(new File(settingsPath), settingsData);
         } catch (IOException e) {

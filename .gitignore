@@ -3,7 +3,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 /Databases.db
-/cupertino-dark.css
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -38,4 +37,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
-/src/main/resources/org/app/donationstream/image/donate.png
+/src/main/resources/org/app/donationstream/icons/donate.png
